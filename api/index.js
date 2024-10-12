@@ -15,17 +15,17 @@ app.use(express.json({ limit: '50mb' }));
 app.use('/api/v1/post', postRoutes);
 
 app.get('/', (req, res) => {
-    res.send('Hello !');
+	res.send('Hello server!');
 });
 
 const startServer = async () => {
-    try {
-        connectDB(process.env.MONGODB_URL);
+	try {
+		connectDB(process.env.MONGODB_URL);
 
-        app.listen(9999, () => console.log('Server has started on http://localhost:9999'));
-    } catch (error) {
-        console.log(error);
-    }
+		app.listen(9999, () => console.log('Server has started on http://localhost:9999'));
+	} catch (error) {
+		console.log(error);
+	}
 };
 
 startServer();
