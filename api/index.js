@@ -1,18 +1,16 @@
-import express from 'express';
-import * as dotenv from 'dotenv';
 import cors from 'cors';
-
-import connectDB from '../mongodb/connect.js';
+import express from 'express';
+import connectDB from '../middleware/connectDb.js';
 import postRoutes from '../routes/postRoutes.js';
-
-dotenv.config();
+import userRoutes from '../routes/userRoutes.js';
 
 const app = express();
 
 app.use(cors());
 app.use(express.json({ limit: '50mb' }));
 
-app.use('/api/v1/post', postRoutes);
+app.use('/api/v1/posts', postRoutes);
+app.use('/api/v1/users', userRoutes);
 
 app.get('/', (req, res) => {
 	res.send('Hello server!');
