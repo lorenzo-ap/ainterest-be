@@ -18,6 +18,20 @@ const getPosts = async (req, res) => {
 
 		res.status(200).json(posts);
 	} catch (error) {
+		console.log(error);
+		res.status(500).json(error);
+	}
+};
+
+const getUserPosts = async (req, res) => {
+	try {
+		const { id } = req.params;
+
+		const posts = await Post.find({ 'user._id': id });
+
+		res.status(200).json(posts);
+	} catch (error) {
+		console.log(error);
 		res.status(500).json(error);
 	}
 };
@@ -45,6 +59,7 @@ const createPost = async (req, res) => {
 
 		res.status(201).json(newPost);
 	} catch (error) {
+		console.log(error);
 		res.status(500).json(error);
 	}
 };
@@ -55,9 +70,14 @@ const createPost = async (req, res) => {
 	@access Private
 **/
 const deletePosts = async (req, res) => {
-	await Post.deleteMany({});
+	try {
+		await Post.deleteMany({});
 
-	res.status(200).json({ success: true, message: 'All posts deleted' });
+		res.status(200).json({ success: true, message: 'All posts deleted' });
+	} catch (error) {
+		console.log(error);
+		res.status(500).json(error);
+	}
 };
 
-export { createPost, deletePosts, getPosts };
+export { createPost, deletePosts, getPosts, getUserPosts };

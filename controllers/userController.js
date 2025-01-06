@@ -14,11 +14,16 @@ const registerUser = async (req, res) => {
 		return res.status(400).json({ message: 'Please enter all fields' });
 	}
 
-	// Check for existing user
-	const userExists = await User.findOne({ email });
+	const usernameExists = await User.findOne({ username });
 
-	if (userExists) {
-		return res.status(400).json({ message: 'User already exists' });
+	if (usernameExists) {
+		return res.status(400).json({ message: 'Username already taken' });
+	}
+
+	const emailExists = await User.findOne({ email });
+
+	if (emailExists) {
+		return res.status(400).json({ message: 'Email already taken' });
 	}
 
 	// Hash password
@@ -53,18 +58,23 @@ const loginUser = async (req, res) => {
 	const { email, password } = req.body;
 
 	const user = await User.findOne({ email });
+
+	if (!user) {
+		return res.status(400).json({ message: 'Invalid email' });
+	}
+
 	const rightPassword = await bcrypt.compare(password, user.password);
 
-	if (user && rightPassword) {
-		return res.status(201).json({
-			_id: user._id,
-			username: user.username,
-			email: user.email,
-			token: generateToken(user._id),
-		});
-	} else {
-		return res.status(400).json({ message: 'Invalid email or password' });
+	if (!rightPassword) {
+		return res.status(400).json({ message: 'Invalid password' });
 	}
+
+	return res.status(200).json({
+		_id: user._id,
+		username: user.username,
+		email: user.email,
+		token: generateToken(user._id),
+	});
 };
 
 /**
@@ -75,7 +85,7 @@ const loginUser = async (req, res) => {
 const currentUser = async (req, res) => {
 	const { _id, username, email } = req.user;
 
-	return res.status(201).json({
+	return res.status(200).json({
 		_id,
 		username,
 		email,
