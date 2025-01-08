@@ -44,17 +44,18 @@ const getUserPosts = async (req, res) => {
 const createPost = async (req, res) => {
 	try {
 		const { prompt, photo } = req.body;
-		const { _id, username, email } = req.user;
+		const { _id, username, email, photo: userPhoto } = req.user;
 
-		const photoUrl = await cloudinary.uploader.upload(photo);
+		const cloudinaryPhoto = await cloudinary.uploader.upload(photo);
 		const newPost = await Post.create({
 			user: {
 				_id,
 				username,
 				email,
+				photo: userPhoto,
 			},
 			prompt,
-			photo: photoUrl.url,
+			photo: cloudinaryPhoto.secure_url,
 		});
 
 		res.status(201).json(newPost);
