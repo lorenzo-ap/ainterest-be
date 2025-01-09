@@ -3,3 +3,4 @@ node_modules
 *.gz
 .env
 /api/.env
+.DS_Store

@@ -12,6 +12,7 @@ const postSchema = new mongoose.Schema(
 		},
 		prompt: { type: String, required: [true, 'Please add a prompt'] },
 		photo: { type: String, required: [true, 'Please add a photo'] },
+		likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
 	},
 	{
 		timestamps: true,

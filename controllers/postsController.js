@@ -23,6 +23,11 @@ const getPosts = async (req, res) => {
 	}
 };
 
+/**
+	@desc Get user posts
+	@route GET /api/v1/posts/:id
+	@access Public
+**/
 const getUserPosts = async (req, res) => {
 	try {
 		const { id } = req.params;
@@ -81,4 +86,30 @@ const deletePosts = async (req, res) => {
 	}
 };
 
-export { createPost, deletePosts, getPosts, getUserPosts };
+/**
+	@desc Like post
+	@route PUT /api/v1/posts
+	@access Private
+**/
+const likePost = async (req, res) => {
+	try {
+		const { id } = req.params;
+
+		const post = await Post.findById(id);
+
+		if (!post.likes.includes(req.user._id)) {
+			post.likes.push(req.user._id);
+		} else {
+			post.likes = post.likes.filter(like => like.toString() !== req.user._id.toString());
+		}
+
+		await post.save();
+
+		res.status(200).json(post);
+	} catch (error) {
+		console.log(error);
+		res.status(500).json(error);
+	}
+};
+
+export { createPost, deletePosts, getPosts, getUserPosts, likePost };
