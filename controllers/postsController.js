@@ -71,15 +71,17 @@ const createPost = async (req, res) => {
 };
 
 /**
-	@desc Delete all posts
-	@route DELETE /api/v1/posts
+	@desc Delete post
+	@route DELETE /api/v1/posts/:id
 	@access Private
 **/
 const deletePosts = async (req, res) => {
 	try {
-		await Post.deleteMany({});
+		const { id } = req.params;
 
-		res.status(200).json({ success: true, message: 'All posts deleted' });
+		await Post.findByIdAndDelete(id);
+
+		res.status(200).json({ message: 'Post deleted' });
 	} catch (error) {
 		console.log(error);
 		res.status(500).json(error);
@@ -88,7 +90,7 @@ const deletePosts = async (req, res) => {
 
 /**
 	@desc Like post
-	@route PUT /api/v1/posts
+	@route PUT /api/v1/posts/:id
 	@access Private
 **/
 const likePost = async (req, res) => {

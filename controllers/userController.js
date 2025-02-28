@@ -25,6 +25,26 @@ const currentUser = async (req, res) => {
 };
 
 /**
+	@desc Get user data by username
+	@route GET /api/v1/users/:username
+	@access Private
+**/
+const getUserByUsername = async (req, res) => {
+	const user = await User.findOne({ username: req.params.username });
+
+	if (!user) {
+		return res.status(400).json({ message: 'User not found' });
+	}
+
+	return res.status(200).json({
+		_id: user._id,
+		username: user.username,
+		email: user.email,
+		photo: user.photo,
+	});
+};
+
+/**
  * @desc Edit user data
  * @route PUT /api/v1/users/edit
  * @access Private
@@ -71,4 +91,4 @@ const editUser = async (req, res) => {
 	});
 };
 
-export { currentUser, editUser };
+export { currentUser, editUser, getUserByUsername };
