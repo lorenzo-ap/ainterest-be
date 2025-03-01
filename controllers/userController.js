@@ -14,13 +14,14 @@ cloudinary.config({
 	@access Private
 **/
 const currentUser = async (req, res) => {
-	const { _id, username, email, photo } = req.user;
+	const { _id, username, email, photo, role } = req.user;
 
 	return res.status(200).json({
 		_id,
 		username,
 		email,
 		photo,
+		role,
 	});
 };
 
@@ -41,6 +42,7 @@ const getUserByUsername = async (req, res) => {
 		username: user.username,
 		email: user.email,
 		photo: user.photo,
+		role: user.role,
 	});
 };
 
@@ -88,6 +90,7 @@ const editUser = async (req, res) => {
 		username: user.username,
 		email: user.email,
 		photo: user.photo,
+		role: user.role,
 	});
 };
 

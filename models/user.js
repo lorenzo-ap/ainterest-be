@@ -5,6 +5,7 @@ const userSchema = new mongoose.Schema({
 	email: { type: String, required: [true, 'Please add an email'], unique: true },
 	password: { type: String, required: [true, 'Please add a password'] },
 	photo: { type: String, default: '' },
+	role: { type: String, enum: ['user', 'admin'], default: 'user' },
 });
 
 export default mongoose.model('User', userSchema);

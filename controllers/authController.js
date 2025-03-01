@@ -53,6 +53,7 @@ const registerUser = async (req, res) => {
 		username: user.username,
 		email: user.email,
 		photo: '',
+		role: user.role,
 		token: generateToken(user._id),
 	});
 };
@@ -82,6 +83,7 @@ const loginUser = async (req, res) => {
 		username: user.username,
 		email: user.email,
 		photo: user.photo,
+		role: user.role,
 		token: generateToken(user._id),
 	});
 };
