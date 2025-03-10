@@ -2,7 +2,7 @@
 
 ## Overview
 
-**image-generator-be** is a lightweight backend application designed to support image generation, likely interfacing with an AI-based service. Created by [**lorenzo-ap**](https://github.com/lorenzo-ap), it provides API endpoints for the **image-generator-fe** front-end.
+**`ainterest-be`** is a lightweight backend application designed to support image generation, likely interfacing with an AI-based service. Created by [**lorenzo-ap**](https://github.com/lorenzo-ap), it provides API endpoints for [**ainterest-fe**](https://github.com/lorenzo-ap/ainterest-fe).
 
 ## Features
 
