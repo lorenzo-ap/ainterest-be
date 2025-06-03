@@ -127,6 +127,14 @@ const generateImage = async (req, res) => {
 			return res.status(400).json({ error: 'Prompt is required' });
 		}
 
+		const body = {
+			prompt,
+			negative_prompt: 'NSFW',
+			width: size,
+			height: size,
+			num_steps: +process.env.IMAGE_GENERATOR_NUM_STEPS,
+		};
+
 		const response = await fetch(
 			`https://api.cloudflare.com/client/v4/accounts/${process.env.CLOUDFLARE_ACCOUNT_ID}/ai/run/@cf/stabilityai/stable-diffusion-xl-base-1.0`,
 			{
@@ -135,13 +143,7 @@ const generateImage = async (req, res) => {
 					Authorization: `Bearer ${process.env.CLOUDFLARE_API_TOKEN}`,
 					'Content-Type': 'application/json',
 				},
-				body: JSON.stringify({
-					prompt,
-					negative_prompt: 'NSFW',
-					width: size,
-					height: size,
-					num_steps: process.env.IMAGE_GENERATOR_NUM_STEPS,
-				}),
+				body: JSON.stringify(body),
 			}
 		);
 
