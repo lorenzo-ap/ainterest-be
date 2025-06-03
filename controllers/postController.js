@@ -75,7 +75,7 @@ const createPost = async (req, res) => {
 	@route DELETE /api/v1/posts/:id
 	@access Private
 **/
-const deletePosts = async (req, res) => {
+const deletePost = async (req, res) => {
 	try {
 		const { id } = req.params;
 
@@ -114,4 +114,4 @@ const likePost = async (req, res) => {
 	}
 };
 
-export { createPost, deletePosts, getPosts, getUserPosts, likePost };
+export { createPost, deletePost, getPosts, getUserPosts, likePost };
