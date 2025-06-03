@@ -135,7 +135,7 @@ const generateImage = async (req, res) => {
 					Authorization: `Bearer ${process.env.CLOUDFLARE_API_TOKEN}`,
 					'Content-Type': 'application/json',
 				},
-				body: JSON.stringify({ prompt, negative_prompt: 'NSFW', width: size, height: size }),
+				body: JSON.stringify({ prompt, negative_prompt: 'NSFW', width: size, height: size, num_steps: 14 }),
 			}
 		);
 
