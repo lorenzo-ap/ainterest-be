@@ -25,7 +25,12 @@ CLOUDINARY_CLOUD_NAME=your-cloud-name
 CLOUDINARY_API_KEY=your-api-key
 CLOUDINARY_API_SECRET=your-api-secret
 MONGODB_URL=your-mongodb-url
-JWT_SECRET=random-string
+JWT_ACCESS_SECRET=random-string
+JWT_REFRESH_SECRET=different-random-string-for-refresh-tokens
+FRONTEND_URL=your-frontend-url
+CLOUDFLARE_ACCOUNT_ID=your-cloudflare-account-id
+CLOUDFLARE_API_TOKEN=your-cloudflare-api-token
+IMAGE_GENERATOR_NUM_STEPS=0-to-20
 ```
 
 ## Author

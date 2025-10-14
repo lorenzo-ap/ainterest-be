@@ -6,6 +6,7 @@ const userSchema = new mongoose.Schema({
 	password: { type: String, required: [true, 'Please add a password'] },
 	photo: { type: String, default: '' },
 	role: { type: String, enum: ['user', 'admin'], default: 'user' },
+	refreshToken: { type: String, default: null }
 });
 
 export default mongoose.model('User', userSchema);
