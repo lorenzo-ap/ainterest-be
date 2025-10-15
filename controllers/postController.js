@@ -4,7 +4,7 @@ import Post from '../models/post.js';
 cloudinary.config({
 	cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
 	api_key: process.env.CLOUDINARY_API_KEY,
-	api_secret: process.env.CLOUDINARY_API_SECRET,
+	api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
 /**
@@ -57,10 +57,10 @@ const createPost = async (req, res) => {
 				_id,
 				username,
 				email,
-				photo: userPhoto,
+				photo: userPhoto
 			},
 			prompt,
-			photo: cloudinaryPhoto.secure_url,
+			photo: cloudinaryPhoto.secure_url
 		});
 
 		res.status(201).json(newPost);
@@ -102,7 +102,7 @@ const likePost = async (req, res) => {
 		if (!post.likes.includes(req.user._id)) {
 			post.likes.push(req.user._id);
 		} else {
-			post.likes = post.likes.filter(like => like.toString() !== req.user._id.toString());
+			post.likes = post.likes.filter((like) => like.toString() !== req.user._id.toString());
 		}
 
 		await post.save();
@@ -114,53 +114,4 @@ const likePost = async (req, res) => {
 	}
 };
 
-/**
- * @desc Generate an image based on the provided prompt and dimensions
- * @route POST /api/v1/posts/generate-image
- * @access Private
- */
-const generateImage = async (req, res) => {
-	try {
-		const { prompt, size } = req.body;
-
-		if (!prompt) {
-			return res.status(400).json({ error: 'Prompt is required' });
-		}
-
-		const body = {
-			prompt,
-			negative_prompt: 'NSFW',
-			width: size,
-			height: size,
-			num_steps: +process.env.IMAGE_GENERATOR_NUM_STEPS,
-		};
-
-		const response = await fetch(
-			`https://api.cloudflare.com/client/v4/accounts/${process.env.CLOUDFLARE_ACCOUNT_ID}/ai/run/@cf/stabilityai/stable-diffusion-xl-base-1.0`,
-			{
-				method: 'POST',
-				headers: {
-					Authorization: `Bearer ${process.env.CLOUDFLARE_API_TOKEN}`,
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify(body),
-			}
-		);
-
-		if (!response.ok) {
-			throw new Error(`HTTP error! status: ${response.status}`);
-		}
-
-		const imageBuffer = await response.arrayBuffer();
-		const base64Image = Buffer.from(imageBuffer).toString('base64');
-
-		res.status(200).json({
-			image: `data:image/png;base64,${base64Image}`,
-		});
-	} catch (error) {
-		console.error('Error:', error.message);
-		res.status(500).json({ error: 'Internal server error' });
-	}
-};
-
-export { createPost, deletePost, generateImage, getPosts, getUserPosts, likePost };
+export { createPost, deletePost, getPosts, getUserPosts, likePost };

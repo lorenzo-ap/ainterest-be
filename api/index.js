@@ -3,6 +3,7 @@ import cors from 'cors';
 import express from 'express';
 import connectDB from '../middleware/connectDb.js';
 import authRoutes from '../routes/authRoutes.js';
+import generateRoutes from '../routes/generateRoutes.js';
 import postRoutes from '../routes/postRoutes.js';
 import userRoutes from '../routes/userRoutes.js';
 
@@ -20,6 +21,7 @@ app.use(cookieParser());
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/user', userRoutes);
 app.use('/api/v1/posts', postRoutes);
+app.use('/api/v1/generate', generateRoutes);
 
 app.get('/', (req, res) => {
 	res.send('Hello server!');
